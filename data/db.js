@@ -6,3 +6,11 @@ const connection = mysql2.createConnection({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
 });
+
+(connection,
+  connect((err) => {
+    if (err) throw err;
+    console.log("Connected to my sql");
+  }));
+
+module.exports = connection;
