@@ -6,6 +6,8 @@ const routerMovies = require("./routers/routerMovies");
 const errorHandler = require("./middlewares/errorHandler");
 const notFound = require("./middlewares/notFound");
 
+app.use(express.static("public"));
+
 app.use("/", routerMovies);
 
 app.listen(port, () => {

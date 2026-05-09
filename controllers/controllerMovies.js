@@ -11,12 +11,21 @@ function index(req, res) {
 function show(req, res) {
   const id = req.params.id;
   const sql = "SELECT * FROM movies WHERE movies.id = ?";
+  const sqlReviews =
+    "SELECT * FROM reviews JOIN  movies ON movie_id = movies.id WHERE movies.id = ?";
 
-  connection.query(sql, [id], (err, result) => {
+  connection.query(sql, [id], (err, movieResult) => {
     if (err) return res.status(500).json({ error: "Database query failed" });
-    if (result.lenght === 0)
+    if (movieResult.lenght === 0)
       return res.status(404).json({ error: 404, message: "Film not found" });
-    res.json(result);
+
+    const movie = movieResult[0];
+
+    connection.query(sqlReviews, [id], (err, reviewsResult) => {
+      if (err) return res.status(500).json({ error: "Data query failed" });
+      movie.reviews = reviewsResult;
+      res.json(movieResult);
+    });
   });
 }
 
