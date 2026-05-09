@@ -1,13 +1,10 @@
 const express = require(`express`);
 const router = express.Router();
+const controller = require("./../controllers/controllerMovies");
 
-router.get("/", (req, res) => {
-  res.send("lista film - Index");
-});
+router.get("/", controller.index);
 
-router.get("/:id", (req, res) => {
-  res.send("dettagio film - show");
-});
+router.get("/:id", controller.show);
 
 router.post("/", (req, res) => {
   res.send("Post");
